@@ -4,6 +4,8 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import CSVLogger, ModelCheckpoint, EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 
+
+
 img_width, img_height = 224, 224
 num_channels = 3
 train_data = 'data/train'
