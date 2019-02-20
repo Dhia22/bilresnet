@@ -6,3 +6,4 @@
 %cd ..
 !wget http://41.229.96.242/uploads/data.tar.gz
 !tar -xvzf data.tar.gz
+!python train.py

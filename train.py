@@ -7,7 +7,7 @@ from keras.callbacks import ReduceLROnPlateau
 img_width, img_height = 224, 224
 num_channels = 3
 train_data = 'data/train'
-valid_data = 'data/valid'
+valid_data = 'data/val'
 num_classes = 196
 num_train_samples = 6549
 num_valid_samples = 1595
