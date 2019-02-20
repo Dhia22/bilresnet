@@ -167,6 +167,7 @@ def resnet152_model(img_rows, img_cols, color_type=1, num_classes=None):
 
     # Learning rate is changed to 0.001
     sgd = SGD(lr=1e-3, decay=1e-6, momentum=0.9, nesterov=True)
+	model.load_weights("./models/model.05-0.63.hdf5")
     model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
 
     return model
