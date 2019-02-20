@@ -261,8 +261,8 @@ def resnet152_model(img_rows, img_cols, color_type=1, num_classes=None):
 
     output_shape_x = x.get_shape().as_list()[1:]
     output_shape_cb = (output_shape_x[0], output_shape_x[1], 8000,)
-    x = merge(compact_bilinear_arg_list, mode=compact_bilinear, name='compact_bilinear', output_shape=output_shape_cb)
-
+    #x = merge(compact_bilinear_arg_list, mode=compact_bilinear, name='compact_bilinear', output_shape=output_shape_cb)
+    x = Lambda(compact_bilinear,output_shape_cb)(compact_bilinear_arg_list)
     # Sign sqrt and L2 normalize result
     x = Lambda(lambda x: K.sign(x) * K.sqrt(K.abs(x)))(x)
     x = Lambda(lambda x: K.l2_normalize(x, axis=-1))(x)
