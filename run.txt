@@ -1,0 +1,8 @@
+!git clone https://github.com/Dhia22/bilresnet.git
+%cd bilresnet
+!mkdir models
+%cd models
+!wget http://41.229.96.242/uploads/resnet152_weights_tf.tar.gz
+%cd ..
+!wget http://41.229.96.242/uploads/data.tar.gz
+!tar -xvzf data.tar.gz
