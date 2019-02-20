@@ -257,18 +257,16 @@ def resnet152_model(img_rows, img_cols, color_type=1, num_classes=None):
     # Truncate and replace softmax layer for transfer learning
     # Cannot use model.layers.pop() since model is not of Sequential() type
     # The method below works since pre-trained weights are stored in layers but not in the model
-	compact_bilinear_arg_list = [x, x]
+    compact_bilinear_arg_list = [x,x]
 
     output_shape_x = x.get_shape().as_list()[1:]
-    output_shape_cb = (output_shape_x[0], output_shape_x[1], 8000,)
+    output_shape_cb = (output_shape_x[0], output_shape_x[1], 8192,)
     #x = merge(compact_bilinear_arg_list, mode=compact_bilinear, name='compact_bilinear', output_shape=output_shape_cb)
     x = Lambda(compact_bilinear,output_shape_cb)(compact_bilinear_arg_list)
     # Sign sqrt and L2 normalize result
     x = Lambda(lambda x: K.sign(x) * K.sqrt(K.abs(x)))(x)
     x = Lambda(lambda x: K.l2_normalize(x, axis=-1))(x)
-	
-    x_newfc = AveragePooling2D((7, 7), name='avg_pool')(x)
-    x_newfc = Flatten()(x_newfc)
+    x_newfc = Flatten()(x)
     x_newfc = Dense(num_classes, activation='softmax', name='fc8')(x_newfc)
 
     model = Model(img_input, x_newfc)
