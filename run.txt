@@ -3,8 +3,11 @@
 !mkdir models
 %cd models
 !wget http://41.229.96.242/uploads/resnet152_weights_tf.h5
-!wget http://41.229.96.242/uploads/model.05-0.63.hdf5
+!wget http://41.229.96.242/uploads/model.15-0.82.hdf5
 %cd ..
 !wget http://41.229.96.242/uploads/data.tar.gz
 !tar -xvzf data.tar.gz
 !python train.py
+
+
+!wget http://41.229.96.242/uploads/resnet_152.py
