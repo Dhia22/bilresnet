@@ -49,7 +49,7 @@ if __name__ == '__main__':
     # fine tune the model
     model.fit_generator(
         train_generator,
-        steps_per_epoch=num_train_samples / batch_size,
+        steps_per_epoch=200,
         validation_data=valid_generator,
         validation_steps=num_valid_samples / batch_size,
         epochs=num_epochs,

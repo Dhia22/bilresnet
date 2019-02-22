@@ -11,3 +11,11 @@
 
 
 !wget http://41.229.96.242/uploads/resnet_152.py
+
+
+Classic_Fusion
+!wget http://41.229.96.242/uploads/RearTrunk.tar.gz
+!tar -xvzf RearTrunk.tar.gz
+!pip3 install -U scikit-learn==0.18
+%cd RearBumper
+!python3 -B main.py -t --batch_size 40 --epochs 200 --base_learning_rate=0.0001 --decay_factor=0.1 --decay_epochs=100 --no_gpus=1
