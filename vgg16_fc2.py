@@ -118,7 +118,7 @@ def sparse_loss(y_true,y_pred):
    return tf.nn.softmax_cross_entropy_with_logits_v2(labels=y_true,logits=y_pred)
 decoder_target = tf.placeholder(dtype='int32',shape=(None,nbr_classe))
 
-model_final.compile(optimizer=Adam(),metrics=["accuracy"],loss='sparse_categorical_crossentropy')
+model_final.compile(optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False),metrics=["accuracy"],loss='sparse_categorical_crossentropy')
 checkpoint = ModelCheckpoint("all_fc2.h5", monitor='val_loss',verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 early = EarlyStopping(monitor='val_loss', min_delta=0, patience=100, verbose=1, mode='auto')
 print("training started !")
