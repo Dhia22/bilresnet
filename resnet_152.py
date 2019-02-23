@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from keras.optimizers import SGD
+from keras.optimizers import SGD,Adam
 from keras.layers import Input, Dense, Conv2D, MaxPooling2D, AveragePooling2D, ZeroPadding2D, Flatten, Activation, add
 from keras.layers.normalization import BatchNormalization
 from keras.models import Model
@@ -167,8 +167,8 @@ def resnet152_model(img_rows, img_cols, color_type=1, num_classes=None):
 
     # Learning rate is changed to 0.001
     sgd = SGD(lr=1e-3, decay=1e-6, momentum=0.9, nesterov=True)
-    model.load_weights("./models/model.54-0.79.hdf5")
-    model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
+    #model.load_weights("./models/model.54-0.79.hdf5")
+    model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
     return model
 
