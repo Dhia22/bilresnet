@@ -30,8 +30,7 @@ train_generator = datagen.flow_from_directory(
     class_mode='categorical',
     shuffle=True)
 
-i = 0
-nImages = nTrain
+
 '''vgg_conv.layers.pop()
 vgg_conv.layers.pop()
 vgg_conv.layers.pop()
@@ -47,16 +46,7 @@ for layer in vgg_conv.layers[:-7]:#-7
   layer.trainable = False
   print(layer)
 vgg_conv.summary()
-for inputs_batch, labels_batch in train_generator:
-    print(i*batch_size)
-    #features_batch = vgg_conv.predict(inputs_batch)
-    train_features[i * batch_size: (i + 1) * batch_size] = inputs_batch
-    train_labels[i * batch_size: (i + 1) * batch_size] = labels_batch
-    i += 1
-    if i * batch_size >= nImages:
-        break
 
-#train_features = np.reshape(train_features, (nTrain, 7 * 7 * 512))
 
 
 val_features = np.zeros(shape=(nVal, 224,224,3))
@@ -69,18 +59,6 @@ val_generator = datagen.flow_from_directory(
     class_mode='categorical',
     shuffle=True)
 
-i = 0
-nImages = nVal
-for inputs_batch, labels_batch in val_generator:
-    print(i*batch_size)
-    #features_batch = vgg_conv.predict(inputs_batch)
-    val_features[i * batch_size: (i + 1) * batch_size] = inputs_batch
-    val_labels[i * batch_size: (i + 1) * batch_size] = labels_batch
-    i += 1
-    if i * batch_size >= nImages:
-        break
-
-#val_features = np.reshape(val_features, (nVal, 4096))
 
 from keras import models
 from keras import layers
@@ -105,9 +83,9 @@ checkpoint = ModelCheckpoint("all.h5", monitor='val_loss',verbose=1, save_best_o
 early = EarlyStopping(monitor='val_loss', min_delta=0, patience=10, verbose=1, mode='auto')
 print("training started !")
 tbCallBack = TensorBoard(log_dir='./Graph',histogram_freq=0, write_graph=True,write_images=True)
-history = model_final.fit(train_features,
-                    train_labels,
-                    epochs=800,
+history = model_final.fit_generator(train_generator,
+                    steps_per_epoch=200,
                     batch_size=batch_size,
-                    validation_data=(val_features, val_labels),
+                    validation_data=val_generator,
+					validation_steps=nVal / batch_size,
                     callbacks = [checkpoint, early,tbCallBack])
